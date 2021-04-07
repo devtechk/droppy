@@ -694,10 +694,14 @@ html:not(.mobile) #entry-menu a.active {
 .pswp__button--zoom:hover { color: #f82 }
 .pswp__button--close:hover { color: #d44 }
 .pswp__button--fs:hover { color: #ff4 }
+.pswp__button--dl:hover { color: rgb(50, 168, 40) }
+.pswp__button.share-file:hover { color: #1798c1 }
 .fit-h:hover { color: #18f }
 .fit-v:hover { color: #5c5 }
 .autonext, .loop { color: #666 }
 .on { color: #fff }
+.pswp__button--dl:visited, .pswp__button--dl:active { color: #fff }
+.pswp__button--dl { color: #fff }
 
 .pswp__button--arrow--left:before,
 .pswp__button--arrow--right:before {

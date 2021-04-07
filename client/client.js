@@ -1844,6 +1844,7 @@ function loadMedia(view, files) {
     const html = Handlebars.templates.media({
       autonext: droppy.get("autonext") ? "on " : "",
       loop: droppy.get("loop") ? "on " : "",
+      currentFileSave : view[0].currentFile
     });
     loadContent(view, "media", type, html).then(() => {
       const el = view.find(".pswp")[0];
@@ -1983,7 +1984,14 @@ function loadMedia(view, files) {
         const level = view[0].ps.getZoomLevel() / 1.5;
         view[0].ps.zoomTo(level, middle(view[0].ps), 250);
       });
-
+    view.find(".share-file").off("click").on("click", function() {
+      if (droppy.socketWait) return;
+      requestLink(
+        $(this).parents(".view"),
+        view[0].currentFile,
+        droppy.get("sharelinkDownload")
+      );
+    });
       view[0].ps.init();
       hideSpinner(view);
     });
