@@ -1603,15 +1603,23 @@ function initEntryMenu() {
 
   // Delete a file/folder
   $("#entry-menu .delete").off("click").on("click", (event) => {
-    event.stopPropagation();
-    if (droppy.socketWait) return;
+    var txt;
+    var r = confirm("Are you sure to delete this file?");
+    if (r == true) {
+      event.stopPropagation();
+      if (droppy.socketWait) return;
+  
+      const entry = $(`.data-row[data-id="${droppy.menuTargetId}"]`);
+      const view = entry.parents(".view");
+  
+      toggleCatcher(false);
+      showSpinner(view);
+      sendMessage(view[0].vId, "DELETE_FILE", entry[0].dataset.id);
+      console.log("Deleted");
+    } else {
+      console.log("Delete aborted");
+    }
 
-    const entry = $(`.data-row[data-id="${droppy.menuTargetId}"]`);
-    const view = entry.parents(".view");
-
-    toggleCatcher(false);
-    showSpinner(view);
-    sendMessage(view[0].vId, "DELETE_FILE", entry[0].dataset.id);
   });
 }
 

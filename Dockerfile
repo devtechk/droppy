@@ -1,5 +1,5 @@
-FROM node:alpine
-MAINTAINER silverwind
+FROM arm32v7/node
+MAINTAINER devtechk
 
 # Copy files
 COPY ["node_modules", "/droppy/node_modules"]
@@ -27,6 +27,6 @@ RUN cd /droppy && \
     /usr/local/lib/node_modules \
     /usr/local/share/.cache
 
-EXPOSE 8989
+EXPOSE 8990
 VOLUME ["/config", "/files"]
 CMD ["/droppy/docker-start.sh"]

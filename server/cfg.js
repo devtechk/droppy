@@ -10,7 +10,7 @@ const defaults = {
   listeners: [
     {
       host: ["0.0.0.0", "::"],
-      port: 8989,
+      port: 8990,
       protocol: "http"
     }
   ],

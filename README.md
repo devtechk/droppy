@@ -187,3 +187,17 @@ $ node droppy start --dev
 The [Makefile](https://github.com/silverwind/droppy/blob/master/Makefile) has a few tasks for updating dependencies, pushing docker images, see the comment above for dependencies of those tasks.
 
 © [silverwind](https://github.com/silverwind), distributed under BSD licence.
+
+# Push Image to docker Hub
+Create a build with:
+````sh
+$ docker build .
+````
+Tag Docker the image:
+````sh
+$ docker tag IMAGEHASH devtechk/droppye:version
+````
+Tag Docker the image:
+````sh
+$ docker push devtechk/droppye:version
+````

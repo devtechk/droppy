@@ -1,5 +1,5 @@
 droppy.your.domain {
-  proxy / 127.0.0.1:8989 {
+  proxy / 127.0.0.1:8990 {
     websocket
     transparent
   }
