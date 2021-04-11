@@ -492,8 +492,11 @@ function initAuthPage(firstrun) {
       }
     }).then((res) => {
       if (res.status === 200) {
+        var currentUser = $("#user")[0].value;
         render("main");
         initMainPage();
+        document.getElementsByTagName("main")[0].setAttribute('id', currentUser);
+        console.log(currentUser);
       } else {
         const info = $("#login-info-box");
         info.textContent = firstrun ? "Please fill both fields." : "Wrong login!";
@@ -1133,9 +1136,14 @@ function openDirectory(view, data, isSearch) {
     });
 
     view.find(".delete-file").off("click").on("click", function() {
-      if (droppy.socketWait) return;
-      showSpinner(view);
-      sendMessage(view[0].vId, "DELETE_FILE", $(this).parents(".data-row")[0].dataset.id);
+      var confirmDeleteMessage = confirm("Are you sure to delete this file?");
+      if (confirmDeleteMessage == true) {
+        if (droppy.socketWait) return;
+        showSpinner(view);
+        sendMessage(view[0].vId, "DELETE_FILE", $(this).parents(".data-row")[0].dataset.id);
+      } else {
+        console.log("Delete aborted");
+      }
     });
 
     view.find(".icon-play, .icon-view").off("click").on("click", function() {
@@ -1603,9 +1611,8 @@ function initEntryMenu() {
 
   // Delete a file/folder
   $("#entry-menu .delete").off("click").on("click", (event) => {
-    var txt;
-    var r = confirm("Are you sure to delete this file?");
-    if (r == true) {
+    var confirmDeleteMessage = confirm("Are you sure to delete this file?");
+    if (confirmDeleteMessage == true) {
       event.stopPropagation();
       if (droppy.socketWait) return;
   
@@ -2890,9 +2897,11 @@ function setEditorFontSize(size) {
 
 function showSpinner(view) {
   if (!view.find(".spinner").length) {
-    view.find(".path").append(svg("spinner"));
+    $(".view").append('<div class="mainSpinner"><div class="pre-spinner"></div></div>');
+    view.find(".pre-spinner").append(svg("spinner"));
   }
-
+  
+  view.find(".mainSpinner")[0].setAttribute("class", "mainSpinner in");
   view.find(".spinner")[0].setAttribute("class", "spinner in");
 
   // HACK: Safeguard so a view won't get stuck in loading state
@@ -2906,7 +2915,10 @@ function showSpinner(view) {
 
 function hideSpinner(view) {
   const spinner = view.find(".spinner");
-  if (spinner.length) spinner[0].setAttribute("class", "spinner");
+  if (spinner.length) {
+    spinner[0].setAttribute("class", "spinner");
+    view.find(".mainSpinner")[0].setAttribute("class", "mainSpinner");
+  }
   if (view[0].stuckTimeout) clearTimeout(view[0].stuckTimeout);
 }
 
